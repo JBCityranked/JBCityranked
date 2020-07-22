@@ -13,12 +13,14 @@
          'manage_options',
          'cr-universal-stylesheet',
          'universal_stylesheet_render',
-         plugins_url( 'myplugin/images/icon.png' ),
-         6
+         'dashicons-edit',
+         1
      );
  }
  add_action( 'admin_menu', 'wpdocs_register_my_custom_menu_page' );
 
 function universal_stylesheet_render() {
-  echo 'Universal Style Sheet Render';
+  echo 'Universal Style Sheet Render <br>';
+
+  echo '<textarea name="" id="" cols="30" rows="10"></textarea>';
 }
