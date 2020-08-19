@@ -53,7 +53,7 @@ add_action( 'admin_enqueue_scripts', 'save_univeral_ajax_enqueue' );
  * Ajax Call back - Where we save our Styles
  * @return [type] [description]
  */
-function save_universal_ajax_callback() {
+function save_universal() {
 	global $wpdb; // this is how you get access to the database
 
 	$sent_stylees = $_POST['styles'];
