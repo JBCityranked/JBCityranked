@@ -1,15 +1,16 @@
 jQuery(document).ready(function($) {
-
+  var return_styles = false;
   $('#saveUniversal').on('click', function(){
     console.log('saving styles');
-  })
+    return_styles = $('#universal_stylesheet').val();
+    var data = {
+  		'action': 'save_universal',
+  		'styles': return_styles,
+      '_ajax_nonce': _universal._nonce
+  	};
 
-	// var data = {
-	// 	'action': 'save_universal',
-	// 	// 'whatever': ajax_object.we_value      // We pass php values differently!
-	// };
-	// We can also pass the url value separately from ajaxurl for front end AJAX implementations
-	// jQuery.post(ajax_object.ajax_url, data, function(response) {
-	// 	alert('Got this from the server: ' + response);
-	// });
+  	jQuery.post(_universal._ajax_url, data, function(response) {
+  		console.log('Got this from the server: ' + response);
+  	});
+  });
 });
