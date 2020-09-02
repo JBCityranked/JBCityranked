@@ -25,11 +25,20 @@
  * @return void
  */
 function universal_stylesheet_render() {
-  echo 'Universal Stylesheet Render <br>';
+  ob_start();
+?>
+  <div id="universal-style-wrapper">
+    <h3>Universal Stylesheet Render</h3>
 
-  echo '<textarea name="universal_stylesheet" id="universal_stylesheet" cols="80" rows="10"></textarea></br>';
+    <textarea name="universal_stylesheet" id="universal_stylesheet" cols="80" rows="10"></textarea></br>
 
-  echo '<button id="saveUniversal">Save Styles</button>';
+    <button id="saveUniversal">Save Styles</button>
+    <div id="saving" class="hidden"> .. Saving ..</div>
+    <div id="error" class="hidden"> .. Error .. </div>
+    <div id="error_message" class="hidden"></div>
+  </div>
+  <?php
+  echo ob_get_clean();
 }
 
 
@@ -61,6 +70,8 @@ function save_univeral_ajax_enqueue() {
       '_universal',      // Picnic Basket
       $localization_array // Lunch that can be access from the Picnic Basket
     );
+    wp_enqueue_style( 'universal_admin_styles', plugins_url( '/css/constant-styles.css', __FILE__ ) );
+
 }
 add_action( 'admin_enqueue_scripts', 'save_univeral_ajax_enqueue' );
 

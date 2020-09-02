@@ -1,0 +1,7 @@
+button#saveUniversal {
+    background: deepskyblue;
+}
+
+#universal-style-wrapper .hidden {
+  display: none;
+}
