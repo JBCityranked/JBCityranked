@@ -25,7 +25,7 @@
  * @return void
  */
 function universal_stylesheet_render() {
-  echo 'Universal Style Sheet Render <br>';
+  echo 'Universal Stylesheet Render <br>';
 
   echo '<textarea name="universal_stylesheet" id="universal_stylesheet" cols="80" rows="10"></textarea></br>';
 
