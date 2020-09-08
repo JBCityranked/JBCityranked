@@ -3,6 +3,15 @@
  * Plugin Name: A Universal Style
  * Description: A Universal syle panel
  */
+
+// Define plugin apc_define_constants
+define('UNIVERSALFILE', plugin_dir_url( __DIR__ ).'css/universal-stylesheet.css');
+define('UNIVERSALLOCATION', plugins_url('css/universal-stylesheet.css', __DIR__ ));
+define('STYLELOCATION', ABSPATH . 'wp-content/plugins/a-universal-panel/css/universal-stylesheet.css' );
+
+error_log('ABSPATH');
+error_log(ABSPATH);
+
  /**
   * Register a custom menu page: Register the Style Panel Admin Callback
   * @return void
@@ -25,12 +34,13 @@
  * @return void
  */
 function universal_stylesheet_render() {
+  $style_content = file_get_contents(STYLELOCATION);
   ob_start();
 ?>
   <div id="universal-style-wrapper">
     <h3>Universal Stylesheet Render</h3>
 
-    <textarea name="universal_stylesheet" id="universal_stylesheet" cols="80" rows="10"></textarea></br>
+    <textarea name="universal_stylesheet" id="universal_stylesheet" cols="80" rows="10"><?php echo $style_content; ?></textarea></br>
 
     <button id="saveUniversal">Save Styles</button>
     <div id="saving" class="hidden"> .. Saving ..</div>
@@ -86,9 +96,25 @@ function save_universal() {
   check_ajax_referer( 'save_universal', '_ajax_nonce' );
 
   error_log( 'save universal'  );
-	$sent_stylees = $_POST['styles'];
-  error_log( print_r( $sent_stylees, true ) );
+	$sent_styles = $_POST['styles'];
+  error_log( print_r( $sent_styles, true ) );
 	// Update our options
+  // $dynamic_css_location = plugin_dir_url( __DIR__ ).'css/universal-stylesheet.css';
+  error_log('dynamic lcoation');
+  error_log(UNIVERSALLOCATION);
+  $file_present = check_file();
+
+  if (!$file_present) {
+    // delete file
+    error_log('file present');
+  }
+
+  // Create new file
+  $stylesheet = fopen(STYLELOCATION, "w");
+  fwrite($stylesheet, $sent_styles);
+  fclose($stylesheet);
+  chmod(STYLELOCATION, 0644);
+
 
   // Return Success
 
@@ -97,3 +123,23 @@ function save_universal() {
 	wp_die(); // this is required to terminate immediately and return a proper response
 }
 add_action( 'wp_ajax_save_universal', 'save_universal' );
+
+function check_file() {
+  $file_exists = false;
+  if (file_exists(STYLELOCATION)) {
+    $file_exists = true;
+  }
+  return $file_exists;
+}
+
+function create_file($new_styles) {
+  // create new file with new styles
+  //
+}
+
+function cr_enqueue_dynamic_stylesheet(){
+  if (true === check_file() ) {
+    wp_enqueue_style( 'universal-style', plugins_url( 'css/universal-stylesheet.css', __FILE__ ) );
+  }
+}
+add_action( 'wp_enqueue_scripts', 'cr_enqueue_dynamic_stylesheet' );
