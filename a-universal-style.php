@@ -100,13 +100,13 @@ function save_universal() {
   error_log( print_r( $sent_styles, true ) );
 	// Update our options
   // $dynamic_css_location = plugin_dir_url( __DIR__ ).'css/universal-stylesheet.css';
-  error_log('dynamic lcoation');
-  error_log(UNIVERSALLOCATION);
+
   $file_present = check_file();
 
   if (!$file_present) {
     // delete file
     error_log('file present');
+    unlink(STYLELOCATION);
   }
 
   // Create new file
@@ -114,8 +114,6 @@ function save_universal() {
   fwrite($stylesheet, $sent_styles);
   fclose($stylesheet);
   chmod(STYLELOCATION, 0644);
-
-
   // Return Success
 
   echo 'Success';
