@@ -19,6 +19,12 @@ jQuery(document).ready(function($) {
       function(response) {
         // Then we can read the thank you note that was sent from home to us
 		    console.log('Got this from the server: ' + response);
+        if (response.error) {
+
+        }
+        if (response.success) {
+
+        }
 	  });
   });
 });

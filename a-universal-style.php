@@ -9,9 +9,6 @@ define('UNIVERSALFILE', plugin_dir_url( __DIR__ ).'css/universal-stylesheet.css'
 define('UNIVERSALLOCATION', plugins_url('css/universal-stylesheet.css', __DIR__ ));
 define('STYLELOCATION', ABSPATH . 'wp-content/plugins/a-universal-panel/css/universal-stylesheet.css' );
 
-error_log('ABSPATH');
-error_log(ABSPATH);
-
  /**
   * Register a custom menu page: Register the Style Panel Admin Callback
   * @return void
@@ -95,30 +92,48 @@ add_action( 'admin_enqueue_scripts', 'save_univeral_ajax_enqueue' );
 function save_universal() {
   check_ajax_referer( 'save_universal', '_ajax_nonce' );
 
-  error_log( 'save universal'  );
-	$sent_styles = $_POST['styles'];
-  error_log( print_r( $sent_styles, true ) );
-	// Update our options
-  // $dynamic_css_location = plugin_dir_url( __DIR__ ).'css/universal-stylesheet.css';
+  if ( current_user_can( 'manage_options' ) ) {
 
-  $file_present = check_file();
+    $return_object = (object) array(
+      'error' => false,
+      'errorMessage'  => false,
+      'success' => false
+    );
 
-  if (!$file_present) {
-    // delete file
-    error_log('file present');
-    unlink(STYLELOCATION);
+    $sent_styles = $_POST['styles'];
+    $file_present = check_file();
+
+    if ($file_present) {
+      // delete stylesheet to begin again
+      error_log('file present - deleting file');
+      unlink(STYLELOCATION);
+    }
+
+    // Create stylesheet
+    $stylesheet = fopen(STYLELOCATION, "w");
+    // Report if there was error creating stylesheet
+    if (false === $stylesheet) {
+      $return_object->error = true;
+      $return_object->errorMessage = 'Error creating the stylehseet file';
+    } else {
+      // If no error continue to write stylesheet
+      $write_report = fwrite($stylesheet, $sent_styles);
+      // If error w
+      if (false === $write_report) {
+        $return_object->error = true;
+        $return_object->errorMessage = 'Error writing to stylesheet file';
+      }
+      fclose($stylesheet);
+      chmod(STYLELOCATION, 0644);
+      // Return Success
+      $return_object->success = true;
+    }
+    echo json_encode($return_object);
+
+  	wp_die(); // this is required to terminate immediately and return a proper response
   }
 
-  // Create new file
-  $stylesheet = fopen(STYLELOCATION, "w");
-  fwrite($stylesheet, $sent_styles);
-  fclose($stylesheet);
-  chmod(STYLELOCATION, 0644);
-  // Return Success
 
-  echo 'Success';
-
-	wp_die(); // this is required to terminate immediately and return a proper response
 }
 add_action( 'wp_ajax_save_universal', 'save_universal' );
 
