@@ -1,7 +1,6 @@
 jQuery(document).ready(function($) {
   var return_styles = false;
   $('#saveUniversal').on('click', function(){
-    console.log('saving styles');
     $('#saving').fadeIn( "slow" );
     return_styles = $('#universal_stylesheet').val();
 
@@ -19,18 +18,14 @@ jQuery(document).ready(function($) {
       function(response) {
         // Then we can read the thank you note that was sent from home to us
         let response_object = JSON.parse(response);
-        console.log( response_object);
         $('#saving').fadeOut( "fast" );
-        console.log( typeof( response_object ) );
         if (true == response_object.error) {
           $('#error').fadeIn( "slow" );
           $('#error_message').fadeIn( "slow" );
           $('#saving').html(response.errorMessage);
 
         }
-        console.log( typeof( response_object.success ) );
         if (true == response_object.success ) {
-          console.log('response.success');
           $('#success').fadeIn( "slow" );
           setTimeout(function(){ $('#success').fadeOut( "slow" ); }, 3000);
 

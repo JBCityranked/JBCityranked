@@ -106,7 +106,6 @@ function save_universal() {
 
     if ($file_present) {
       // delete stylesheet to begin again
-      error_log('file present - deleting file');
       unlink(STYLELOCATION);
     }
 

@@ -6,7 +6,7 @@
   display: none;
 }
 
-button#saveUniversal {
+#universal-style-wrapper button#saveUniversal {
     background: #0073aa;
     padding: 8px;
     font-weight: 800;
@@ -16,7 +16,7 @@ button#saveUniversal {
     margin-top: 11px;
 }
 
-#saving {
+#universal-style-wrapper #saving {
     font-size: 16px;
     margin-top: 12px;
     color: #0073aa;
@@ -24,14 +24,14 @@ button#saveUniversal {
     text-shadow: 1px 1px 5px #00800017;
 }
 
-#success {
+#universal-style-wrapper #success {
     color: green;
     margin-top: 12px;
     font-weight: bold;
     text-shadow: 1px 1px 5px #00800017;
 }
 
-#error {
+#universal-style-wrapper #error {
     color: #a80606;
     margin-top: 12px;
     font-weight: bold;
