@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
   var return_styles = false;
   $('#saveUniversal').on('click', function(){
     console.log('saving styles');
-
+    $('#saving').fadeIn( "slow" );
     return_styles = $('#universal_stylesheet').val();
 
     // packup the left overs to send back home
@@ -18,11 +18,21 @@ jQuery(document).ready(function($) {
       data,                 // The leftovers we want to take back home
       function(response) {
         // Then we can read the thank you note that was sent from home to us
-		    console.log('Got this from the server: ' + response);
-        if (response.error) {
+        let response_object = JSON.parse(response);
+        console.log( response_object);
+        $('#saving').fadeOut( "fast" );
+        console.log( typeof( response_object ) );
+        if (true == response_object.error) {
+          $('#error').fadeIn( "slow" );
+          $('#error_message').fadeIn( "slow" );
+          $('#saving').html(response.errorMessage);
 
         }
-        if (response.success) {
+        console.log( typeof( response_object.success ) );
+        if (true == response_object.success ) {
+          console.log('response.success');
+          $('#success').fadeIn( "slow" );
+          setTimeout(function(){ $('#success').fadeOut( "slow" ); }, 3000);
 
         }
 	  });

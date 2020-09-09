@@ -1,4 +1,39 @@
+#universal-style-wrapper {
+    font-size: 16px;
+}
 
 #universal-style-wrapper .hidden {
   display: none;
+}
+
+button#saveUniversal {
+    background: #0073aa;
+    padding: 8px;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 4px;
+    margin-top: 11px;
+}
+
+#saving {
+    font-size: 16px;
+    margin-top: 12px;
+    color: #0073aa;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px #00800017;
+}
+
+#success {
+    color: green;
+    margin-top: 12px;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px #00800017;
+}
+
+#error {
+    color: #a80606;
+    margin-top: 12px;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px #00800036;
 }

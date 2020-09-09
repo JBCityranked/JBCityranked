@@ -41,6 +41,7 @@ function universal_stylesheet_render() {
 
     <button id="saveUniversal">Save Styles</button>
     <div id="saving" class="hidden"> .. Saving ..</div>
+    <div id="success" class="hidden">Save Complete!</div>
     <div id="error" class="hidden"> .. Error .. </div>
     <div id="error_message" class="hidden"></div>
   </div>
