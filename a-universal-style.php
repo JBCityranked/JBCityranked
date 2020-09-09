@@ -1,7 +1,12 @@
 <?php
 /**
  * Plugin Name: A Universal Style
- * Description: A Universal syle panel
+ * Description: A plugin to generate network wide styles for multisite WordPress instllations
+ * Author: Josh Brown @ City Ranked Media
+ * Author URI: https://cityranked.com
+ * Version:           0.1.0
+ * Requires at least: 5.5
+ * Requires PHP:      7.2
  */
 
 // Define plugin apc_define_constants
@@ -101,6 +106,7 @@ function save_universal() {
       'success' => false
     );
 
+    // Get returned styles
     $sent_styles = $_POST['styles'];
     $file_present = check_file();
 
@@ -132,22 +138,19 @@ function save_universal() {
 
   	wp_die(); // this is required to terminate immediately and return a proper response
   }
-
-
 }
 add_action( 'wp_ajax_save_universal', 'save_universal' );
 
+/**
+ * Check if the dynamic universal stylesheet exits
+ * @return boolean
+ */
 function check_file() {
   $file_exists = false;
   if (file_exists(STYLELOCATION)) {
     $file_exists = true;
   }
   return $file_exists;
-}
-
-function create_file($new_styles) {
-  // create new file with new styles
-  //
 }
 
 function cr_enqueue_dynamic_stylesheet(){
