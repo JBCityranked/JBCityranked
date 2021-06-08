@@ -42,7 +42,7 @@ function universal_stylesheet_render() {
   <div id="universal-style-wrapper">
     <h3>Universal Stylesheet Render</h3>
 
-    <textarea name="universal_stylesheet" id="universal_stylesheet" cols="80" rows="10"><?php echo $style_content; ?></textarea></br>
+    <textarea name="universal_stylesheet" id="universal_stylesheet" cols="80" rows="10"><?php echo esc_html($style_content); ?></textarea></br>
 
     <button id="saveUniversal">Save Styles</button>
     <div id="saving" class="hidden"> .. Saving ..</div>
@@ -105,9 +105,13 @@ function save_universal() {
       'errorMessage'  => false,
       'success' => false
     );
+    $sent_parcel = isset($_POST['styles']) ? sanitize_textarea_field( $_POST['styles'] ) : '';
+    if ('' != $sent_parcel) {
+      $raw_styles = wp_unslash( $sent_parcel );
+      // Get returned styles
+      $sent_styles = wp_strip_all_tags($raw_styles);
+    }
 
-    // Get returned styles
-    $sent_styles = $_POST['styles'];
     $file_present = check_file();
 
     if ($file_present) {
@@ -124,7 +128,6 @@ function save_universal() {
     } else {
       // If no error continue to write stylesheet
       $write_report = fwrite($stylesheet, $sent_styles);
-      // If error w
       if (false === $write_report) {
         $return_object->error = true;
         $return_object->errorMessage = 'Error writing to stylesheet file';
